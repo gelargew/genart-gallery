@@ -9,7 +9,11 @@ import { Suspense } from 'react'
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <>
+      <Head>
+        <title>Generative Art | Gelar</title>
+      </Head>
+      <div className={styles.container}>
       <main>
         <Suspense fallback={null}>
           <Canvas gl={{ antialias: false }} dpr={[1, 1.5]} onPointerMissed={() => (state.clicked = null)}>
@@ -18,6 +22,8 @@ const Home: NextPage = () => {
         </Suspense>
       </main>
     </div>
+    </>
+
   )
 }
 

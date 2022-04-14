@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as THREE from 'three'
 import { MutableRefObject, Ref, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'

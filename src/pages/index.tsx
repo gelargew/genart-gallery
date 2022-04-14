@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import Items from '../components/Items'
 import { state } from '../components/util'
 import { Suspense } from 'react'
+import Background from '../components/Background'
 
 const Home: NextPage = () => {
   return (
@@ -17,6 +18,7 @@ const Home: NextPage = () => {
       <main>
         <Suspense fallback={null}>
           <Canvas gl={{ antialias: false }} dpr={[1, 1.5]} onPointerMissed={() => (state.clicked = null)}>
+            <Background />
             <Items />
           </Canvas>
         </Suspense>

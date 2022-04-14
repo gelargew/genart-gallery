@@ -1,32 +1,27 @@
-import { Canvas } from "@react-three/fiber";
-
-export default function Background() {
-
-    return (
-        <Canvas>
-
-        </Canvas>
-    )
-
-}
+import { Plane, shaderMaterial, useTexture } from "@react-three/drei";
+import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
+import { useLayoutEffect, useRef } from "react";
+import * as THREE from 'three'
 
 
-const vertex = `
+const ShaderMat = shaderMaterial(
+  {
+    uTime: 0,
+    uGradient: null
+  },
+  `
   precision lowp float;
 
-  attribute vec2 position;
-  attribute vec2 uv;
 
   varying vec2 vUv;
 
   void main() {
     vUv = uv;
-    gl_Position = vec4(position, 0., 1.);
+    gl_Position = vec4(position.xy, 0., 1.);
   }
-`;
-
-const fragment = `
-  precision highp float;
+`,
+`
+  precision lowp float;
 
   //	Simplex 3D Noise 
   //	by Ian McEwan, Ashima Arts
@@ -118,24 +113,37 @@ const fragment = `
 
     float alpha = noise + noise1 + noise2;
 
-    float x = 1. - noise;
+    float x = 0. - noise;
     vec3 color = texture2D(uGradient, vec2(x, 0.5)).rgb;
 
     gl_FragColor.rgb = color;
     gl_FragColor.a = clamp(0.,alpha,1.);
   }
-`;
+`)
 
-/* const program = new Program(gl, {
-  uniforms: {
-    uTime: {
-      value: 0
-    },
-    uGradient: {
-      value: new TextureLoader(gl).load("/gradient.jpg")
-    }
-  },
-  vertex,
-  fragment,
-  transparent: true
-}); */
+extend({ ShaderMat })
+
+
+export default function Background() {
+  const ref = useRef<THREE.Mesh>(null!)
+  const texture = useTexture('/images/gradient2.png')
+  const {viewport} = useThree()
+
+  useLayoutEffect(() => {
+    ref.current.material.uniforms.uGradient.value = texture
+    ref.current.material.uniforms.uGradient.value.needsUpdate = true
+
+  }, [])
+
+  useFrame((state, delta) => {
+    ref.current.material.uniforms.uTime.value += (delta * 0.1)
+  })
+
+  return (
+
+        <Plane  ref={ref} args={[2, 2, 1]} position={[0, 0, -0.2]}>
+          <shaderMat attach='material' uGradient={null} />
+        </Plane>
+
+  )
+}

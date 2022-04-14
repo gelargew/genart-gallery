@@ -31,7 +31,7 @@ function Item({ index, position, scale, c = new THREE.Color(), url, ...props }) 
         </group>
 }
 
-function Items({ w = 0.7, gap = 0.15 }) {
+function Items({ w = 0.7, gap = 0.8 }) {
   const { urls } = useSnapshot(state)
   const { width } = useThree((state) => state.viewport)
   const xW = w + gap

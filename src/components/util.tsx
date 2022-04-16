@@ -5,11 +5,14 @@ export const damp = THREE.MathUtils.damp
 export const state = proxy({
   clicked: null,
   urls: [
+      'faces',
+      'cube',
       'bocre',
       'cloud',
       'colossal',
-      'uni',
+      'crowd',
       'whales',
-      'ayykia'
+      'cube2',
+      'uni'
   ].map((u) => `/images/${u}.png`)
 })

@@ -6,6 +6,7 @@ import { Image, ScrollControls, Scroll, useScroll, Box } from '@react-three/drei
 import { useSnapshot } from 'valtio'
 import { Minimap } from './Minimap'
 import { state, damp } from './util'
+import Background from './Background'
 
 function Item({ index, position, scale, c = new THREE.Color(), url, ...props }) {
   const ref = useRef<THREE.Group>(null!)
@@ -31,7 +32,7 @@ function Item({ index, position, scale, c = new THREE.Color(), url, ...props }) 
         </group>
 }
 
-function Items({ w = 0.7, gap = 0.8 }) {
+function Items({ w = 0.7, gap = 0.4 }) {
   const { urls } = useSnapshot(state)
   const { width } = useThree((state) => state.viewport)
   const xW = w + gap
@@ -39,7 +40,7 @@ function Items({ w = 0.7, gap = 0.8 }) {
     <ScrollControls horizontal damping={10} pages={(width - xW + urls.length * xW) / width}>
       <Minimap />
       <Scroll>
-        {urls.map((url, i) => <Item key={i} index={i} position={[i * xW, 0, 0]} scale={[w, 4, 1]} url={url} />) /* prettier-ignore */}
+        {urls.map((url, i) => <Item key={i} index={i} position={[i * xW, 0, 0]} scale={[w, 5, 1]} url={url} />) /* prettier-ignore */}
       </Scroll>
     </ScrollControls>
   )

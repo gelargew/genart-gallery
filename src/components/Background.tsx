@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { Plane, shaderMaterial, useTexture } from "@react-three/drei";
 import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
 import { useLayoutEffect, useRef } from "react";
